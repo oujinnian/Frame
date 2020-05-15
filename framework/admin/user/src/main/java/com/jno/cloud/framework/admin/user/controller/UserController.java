@@ -6,6 +6,7 @@ import com.jno.cloud.framework.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +19,12 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public Result register(JSONObject json){
+    public Result register(@RequestBody JSONObject json){
         return userService.register(json);
     }
 
     @PostMapping("/login")
-    public Result login(JSONObject json){
+    public Result login(@RequestBody JSONObject json){
         return userService.login(json);
     }
 
