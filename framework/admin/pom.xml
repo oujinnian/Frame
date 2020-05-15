@@ -19,6 +19,24 @@
     <!--该元素描述了项目相关的所有依赖。 这些依赖组成了项目构建过程中的一个个环节。
         它们自动从项目定义的仓库中下载。要获取更多信息，请看项目依赖机制。 -->
     <dependencies>
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <!--共享工具类-->
+        <dependency>
+            <groupId>com.jno.cloud.framework</groupId>
+            <artifactId>util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+
 
     </dependencies>
 
@@ -42,8 +60,8 @@
     </build>
 
     <modules>
-        <module></module>
-<!--        <module>hhh-admin</module>-->
+        <module>user</module>
+        <module>admin-service</module>
 <!--        <module>hhh-company</module>-->
 <!--        <module>hhh-department</module>-->
 <!--        <module>hhh-menu</module>-->
