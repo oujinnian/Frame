@@ -1,7 +1,7 @@
 package com.jno.cloud.framework.admin.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.jno.cloud.framework.admin.user.entity.User;
+import com.jno.cloud.framework.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -1,4 +1,4 @@
-package com.jno.framework.adminservice.config;
+package com.jno.cloud.framework.admin.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.context.annotation.Bean;

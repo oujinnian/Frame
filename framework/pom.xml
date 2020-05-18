@@ -136,6 +136,7 @@
         <module>transaction</module>
         <module>logs</module>
         <module>auth</module>
+        <module>entity</module>
         <!--        <module>hhh-auth</module>-->
         <!--        <module>hhh-generator</module>-->
         <!--        <module>hhh-logs</module>-->
