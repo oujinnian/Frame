@@ -1,7 +1,6 @@
-package com.jno.cloud.framework.zuul.Interceptor;
+package com.jno.cloud.framework.zuul.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -9,25 +8,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * 解决swagger静态资源被拦截的问题
  */
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class SwaggerResourceReleaseConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        super.addResourceHandlers(registry);
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("/**");
+
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/doc.html")
+                .addResourceLocations("classpath:/META-INF/resources/");        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");        super.addResourceHandlers(registry);
+                
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/swagger/**")
-                .addResourceLocations("classpath:/static/swagger/");
-
-//        registry.addInterceptor(getInterfaceAuthCheckInterceptor())
-//                .addPathPatterns("/**");
-
-//        registry.addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
-//        registry.addResourceHandler("/webjars/**")
-//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        super.addResourceHandlers(registry);
     }
 
 //    @Override
