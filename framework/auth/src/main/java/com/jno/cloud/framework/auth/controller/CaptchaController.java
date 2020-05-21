@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -56,13 +53,22 @@ public class CaptchaController {
 
     @RequestMapping(value = "/draw/{captchaId}", method = RequestMethod.GET)
     @ApiOperation(value = "绘制验证码", notes = "具体我也不清楚")
-    @ApiImplicitParam(name = "captchaId", value = "验证码编号", paramType = "query", required = true, dataType = "String")
+    @ApiImplicitParam(name = "captchaId", value = "验证码编号", paramType = "path", required = true, dataType = "String")
     public void drawCaptcha(@PathVariable("captchaId") String captchaId, HttpServletResponse response) throws IOException {
         //得到验证码 生成指定验证码
         String code=redisTemplate.opsForValue().get(captchaId);
         CreateVerifyCode vCode = new CreateVerifyCode(116,36,4,10,code);
         response.setContentType("image/png");
         vCode.write(response.getOutputStream());
+    }
+
+    @GetMapping("/captcha")
+    @ApiOperation(value = "直接生成验证码", notes = "执行该方法直接返回验证码")
+    public void captcha(HttpServletResponse resp) throws IOException {
+        String captcha = new CreateVerifyCode().randomStr(4);
+        CreateVerifyCode vCode = new CreateVerifyCode(116,36,4,10,captcha);
+        resp.setContentType("image/png");
+        vCode.write(resp.getOutputStream());
     }
 
 
