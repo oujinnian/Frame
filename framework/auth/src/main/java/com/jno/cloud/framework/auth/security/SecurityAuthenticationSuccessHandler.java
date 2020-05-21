@@ -2,7 +2,6 @@ package com.jno.cloud.framework.auth.security;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jno.cloud.framework.redis.util.RedisByteMapper;
-import com.jno.cloud.framework.user.entity.User;
 import com.jno.cloud.framework.util.encryption.CookieUtil;
 import com.jno.cloud.framework.util.result.Result;
 import com.jno.cloud.framework.util.tool.CommonUtil;
@@ -57,7 +56,7 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
         //生成token
         String token = CommonUtil.GUID();
         SecurityAuthenticationToken securityToken = (SecurityAuthenticationToken) authentication;
-        User user = (User)securityToken.getPrincipal();
+//        UserJwt userJwt = (UserJwt)securityToken.getPrincipal();
         if (!isAllowRepeat){
             //不允许重复登陆，更新redis的数据
 //            removeUserInfoByUserId(userJwt.getId());
