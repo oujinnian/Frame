@@ -83,11 +83,28 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
+        <!-- redis工具包 -->
+        <dependency>
+            <groupId>com.jno.cloud.framework</groupId>
+            <artifactId>redis</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!--user实体类包-->
         <dependency>
             <groupId>com.jno.cloud.framework.entity</groupId>
             <artifactId>entity-user</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!--swagger 注解支持 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
 
     </dependencies>

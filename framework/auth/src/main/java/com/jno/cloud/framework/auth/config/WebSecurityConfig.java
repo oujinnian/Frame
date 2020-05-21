@@ -20,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
 
@@ -39,14 +40,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
 
-//    @Autowired
-//    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//
-//    @Autowired
-//    JwtUserDetailsService jwtUserDetailsService;
-//
-//    @Autowired
-//    JwtAuthorizationTokenFilter authenticationTokenFilter;
+    @Autowired
+    @Qualifier("authenticationManagerBean")
+    AuthenticationManager authenticationManager;
+
 
     /**
      * 介绍
@@ -58,18 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoderBean() {
         return new BCryptPasswordEncoder();
     }
-
-//    //先来这里认证一下
-//
-//    /**
-//     * 登录认证
-//     * @param auth
-//     * @throws Exception
-//     */
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(securityAuthenticationProvider);
-//    }
 
     /**
      * 登录认证
@@ -96,37 +81,52 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
-        http.formLogin()    //表单登陆.
-//                .loginPage("/login.html")   //指定登录页
+        http.csrf().disable()
+                //替换默认登陆器
+                .addFilterAt(securityAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .httpBasic()
+                .and()
+                .authorizeRequests().anyRequest().authenticated();
+//               .loginPage("/login.html")   //指定登录页
                 //登录页面提交页面， 使用UsernamePasswordAuthenticationFilter过滤器处理请求
 //                .loginProcessingUrl("/authentication/form")
-                .successHandler(securityAuthenticationSuccessHandler)
-                .failureHandler(securityAuthenticationFailHandler)
-        .and()  //
-        .authorizeRequests()    //授权请求配置
-                //访问此地址不需要进行身份认证，防止重定向死循环
-                .antMatchers("/login.html",
-                        "/swagger-ui",
-                        "/swagger-ui.html",
-                        "/v2/api-docs", // swagger api json
-                        "/swagger-resources/configuration/ui", // 用来获取支持的动作
-                        "/swagger-resources", // 用来获取api-docs的URI
-                        "/swagger-resources/configuration/security", // 安全选项
-                        "/swagger-resources/**"
-                ).permitAll()
-                //方便后面写前后端分离的时候前端过来的第一次验证请求，这样做，会减少这种请求的时间和资源使用
-                .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
-        .anyRequest()   //任何请求
-        .authenticated()    //访问如何资源都需要身份认证
-        .and()
-        .csrf().disable()//关闭跨站请求伪造攻击拦截，禁用 Spring Security 自带的跨域处理，防止csdf攻击的
-                //// 定制我们自己的 session 策略：调整为让 Spring Security 不创建和使用 session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                .successHandler(securityAuthenticationSuccessHandler)
+//                .failureHandler(securityAuthenticationFailHandler)
+//        .and()  //
+//        .authorizeRequests()    //授权请求配置
+//                //访问此地址不需要进行身份认证，防止重定向死循环
+//                .antMatchers("/login.html",
+//                        "/swagger-ui",
+//                        "/swagger-ui.html",
+//                        "/v2/api-docs", // swagger api json
+//                        "/swagger-resources/configuration/ui", // 用来获取支持的动作
+//                        "/swagger-resources", // 用来获取api-docs的URI
+//                        "/swagger-resources/configuration/security", // 安全选项
+//                        "/swagger-resources/**"
+//                ).permitAll()
+//                //方便后面写前后端分离的时候前端过来的第一次验证请求，这样做，会减少这种请求的时间和资源使用
+//                .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
+//        .anyRequest()   //任何请求
+//        .authenticated()    //访问如何资源都需要身份认证
+//        .and()
+//        .csrf().disable()//关闭跨站请求伪造攻击拦截，禁用 Spring Security 自带的跨域处理，防止csdf攻击的
+//                //// 定制我们自己的 session 策略：调整为让 Spring Security 不创建和使用 session
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         //jwt校验，注入两个校验器
 //        http.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
+
+    @Bean
+    public SecurityAuthenticationFilter securityAuthenticationFilter(){
+        SecurityAuthenticationFilter loginHandle = new SecurityAuthenticationFilter();
+        loginHandle.setAuthenticationManager(authenticationManager);
+        loginHandle.setAuthenticationSuccessHandler(securityAuthenticationSuccessHandler);
+        loginHandle.setAuthenticationFailureHandler(securityAuthenticationFailHandler);
+        return loginHandle;
+    }
+
 
     @Bean
     @Override
