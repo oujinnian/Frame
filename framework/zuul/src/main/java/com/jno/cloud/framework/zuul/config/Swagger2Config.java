@@ -37,10 +37,10 @@ public class Swagger2Config {
     }
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("用户系统api")
-                .description("用户系统接口文档说明")
-                .termsOfServiceUrl("http://localhost:6000")
-                .contact(new Contact("xhx", "", ""))
+                .title("微服务")
+                .description("微服务接口文档")
+//                .termsOfServiceUrl("http://localhost:6000")
+                .contact(new Contact("jno", "", "123456789@qq.com"))
                 .version("1.0")
                 .build();
     }
