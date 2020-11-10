@@ -1,8 +1,5 @@
 package com.jno.cloud.framework.util.result;
 
-import lombok.Data;
-
-@Data
 public class TableResult extends Result {
 
     private long count; //总行数
@@ -21,4 +18,12 @@ public class TableResult extends Result {
         this.count = count;
     }
 
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
+    }
 }

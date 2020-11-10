@@ -1,9 +1,7 @@
 package com.jno.cloud.framework.util.result;
 
 import com.jno.cloud.framework.util.base.BaseBean;
-import lombok.Data;
 
-@Data
 public class Result extends BaseBean {
 
     public final static int SUCCESS = 0;   //操作成功
@@ -16,6 +14,8 @@ public class Result extends BaseBean {
     private String msg; //说明
     private Object data;//返回数据
 //    private int status; //状态
+
+
 
     public Result (){
         this.code = ERROR; //未知错误
@@ -34,5 +34,27 @@ public class Result extends BaseBean {
         this.data = data;
     }
 
+    public int getCode() {
+        return code;
+    }
 
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 }

@@ -1,7 +1,6 @@
 package com.jno.cloud.framework.util.encryption;
 
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;
@@ -19,7 +18,6 @@ import java.security.SecureRandom;
  * Jasypt加密解密工具类
  *
  */
-@Slf4j
 public class JasyptUtil {
 
     /**

@@ -2,9 +2,9 @@ package com.jno.cloud.framework.util.tool;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
 import java.lang.reflect.Field;
@@ -16,9 +16,9 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * 简单封装属性拷贝
  * 对象字段操作
  */
-@Slf4j
-@UtilityClass
 public class PropertyCopyUtils {
+
+    private final Logger logger = LoggerFactory.getLogger(PropertyCopyUtils.class);
 
     /**
      * 获得值为null或类型为String时为blank的属性名称
@@ -37,7 +37,7 @@ public class PropertyCopyUtils {
                     Object v = e.get(o);
                     return v == null || (type.equals("class java.lang.String") && isBlank((String) v));
                 } catch (IllegalAccessException ex) {
-                    log.error("属性获取出错{}->" + ex.getMessage());
+                    logger.error("属性获取出错{}->" + ex.getMessage());
                     ex.printStackTrace();
                 }
                 return false;

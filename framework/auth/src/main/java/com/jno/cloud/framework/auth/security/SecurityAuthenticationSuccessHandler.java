@@ -5,7 +5,8 @@ import com.jno.cloud.framework.redis.util.RedisByteMapper;
 import com.jno.cloud.framework.util.encryption.CookieUtil;
 import com.jno.cloud.framework.util.result.Result;
 import com.jno.cloud.framework.util.tool.CommonUtil;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -22,8 +23,9 @@ import java.io.PrintWriter;
  * 设置通过请求拦截。登陆成功后处理
  */
 @Component("wawAuthenticationSuccessHandler")
-@Slf4j
 public class SecurityAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+    private final Logger logger = LoggerFactory.getLogger(SecurityAuthenticationSuccessHandler.class);
 
     private static final String REDISTOKENKEY = "token_";
     private static final String USERINFOKEY = "userinfokey_";
@@ -37,7 +39,7 @@ public class SecurityAuthenticationSuccessHandler implements AuthenticationSucce
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        log.info("登陆成功之后，拦截处理");
+        logger.info("登陆成功之后，拦截处理");
         //取出token
         String token = (String)getResult(authentication);
         httpServletRequest.getSession().setAttribute("token",token);

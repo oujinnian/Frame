@@ -1,6 +1,5 @@
 package com.jno.cloud.framework.util.tool;
 
-import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 
 import javax.imageio.ImageIO;
@@ -15,7 +14,6 @@ import java.util.Random;
  * @ Author        :  jno
  * @ CreateDate    :  2020/5/15 17:50
  */
-@Data
 public class CreateVerifyCode {
 
     Random random = new Random();
