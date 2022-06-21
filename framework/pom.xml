@@ -23,7 +23,7 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <mybatis.version>2.1.1</mybatis.version>
         <mybatis-plus.version>3.2.0</mybatis-plus.version>
-        <mysql.version>8.0.15</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <spring-cloud.version>Greenwich.RC1</spring-cloud.version>
         <ali-nacos.version>0.9.0.RELEASE</ali-nacos.version>
         <jasypt.version>3.0.2</jasypt.version>
